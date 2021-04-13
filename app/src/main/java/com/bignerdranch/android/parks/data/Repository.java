@@ -2,11 +2,13 @@ package com.bignerdranch.android.parks.data;
 
 import com.android.volley.Request;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.bignerdranch.android.parks.controller.AppController;
 import com.bignerdranch.android.parks.model.Park;
 import com.bignerdranch.android.parks.util.Util;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,11 +22,22 @@ public class Repository {
                 response -> {
                     try {
                         JSONArray jsonArray = response.getJSONArray("data");
+                        for(int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+                            Park park = new Park();
+                            park.setId(jsonObject.getString("id"));
+                            park.setId(jsonObject.getString("fullName"));
 
+                            parkList.add(park);
+                        }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
 
                 }, Throwable::printStackTrace);
+        if(callback != null) {
+            callback.processPark(parkList);
+            AppController.getInstance().addToRequestQueue(jsonObjectRequest);
+        }
     }
 }
