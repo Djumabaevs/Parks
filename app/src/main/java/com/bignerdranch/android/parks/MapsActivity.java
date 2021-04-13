@@ -1,11 +1,13 @@
 package com.bignerdranch.android.parks;
 //https://github.com/Djumabaevs/Parks.git
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 
 import com.bignerdranch.android.parks.data.AsyncResponse;
 import com.bignerdranch.android.parks.data.Repository;
@@ -35,7 +37,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
-        bottomNavigationView.setOnNavigationItemReselectedListener(item -> {
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
             Fragment selectedFragment = null;
             int id = item.getItemId();
             if(id == R.id.map_nav_button) {
@@ -44,13 +46,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.map, mapFragment)
                         .commit();
-
+                mapFragment.getMapAsync(this);
+                return true;
             } else if(id == R.id.park_nav_button) {
                 selectedFragment = parksFragment.newInstance();
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.map, selectedFragment)
-                        .commit();
             }
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.map, selectedFragment)
+                    .commit();
+            return true;
         });
     }
 
