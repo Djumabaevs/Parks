@@ -30,14 +30,15 @@ public class Repository {
 
                             parkList.add(park);
                         }
+                        if(callback != null) {
+                            callback.processPark(parkList);
+                        }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
 
                 }, Throwable::printStackTrace);
-        if(callback != null) {
-            callback.processPark(parkList);
-            AppController.getInstance().addToRequestQueue(jsonObjectRequest);
-        }
+
+        AppController.getInstance().addToRequestQueue(jsonObjectRequest);
     }
 }
