@@ -26,7 +26,9 @@ public class Repository {
                             JSONObject jsonObject = jsonArray.getJSONObject(i);
                             Park park = new Park();
                             park.setId(jsonObject.getString("id"));
-                            park.setId(jsonObject.getString("fullName"));
+                            park.setFullName(jsonObject.getString("fullName"));
+                            park.setLatitude(jsonObject.getString("latitude"));
+                            park.setLongitude(jsonObject.getString("longitude"));
 
                             parkList.add(park);
                         }
