@@ -43,15 +43,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 mMap.clear();
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.map, mapFragment)
-                .commit();
+                        .commit();
 
             } else if(id == R.id.park_nav_button) {
                 selectedFragment = parksFragment.newInstance();
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.map, selectedFragment)
+                        .commit();
             }
-            assert selectedFragment != null;
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.map, selectedFragment)
-                    .commit();
         });
     }
 
