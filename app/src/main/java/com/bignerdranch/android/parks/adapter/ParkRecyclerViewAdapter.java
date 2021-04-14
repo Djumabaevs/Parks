@@ -36,7 +36,13 @@ public class ParkRecyclerViewAdapter extends RecyclerView.Adapter<ParkRecyclerVi
         holder.parkType.setText(park.getDesignation());
         holder.parkState.setText(park.getStates());
         if(park.getImages().size() > 0) {
-            Picasso.get().load(park.getImages().get(0).getUrl()).into(holder.parkImage);
+            Picasso.get().
+                    load(park.getImages().get(0).getUrl()).
+                    placeholder(android.R.drawable.stat_sys_download).
+                    error(android.R.drawable.stat_notify_error).
+                    resize(100,100).
+                    centerCrop().
+                    into(holder.parkImage);
         }
     }
 
