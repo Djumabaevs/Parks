@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bignerdranch.android.parks.R;
 import com.bignerdranch.android.parks.model.Park;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -34,7 +35,9 @@ public class ParkRecyclerViewAdapter extends RecyclerView.Adapter<ParkRecyclerVi
         holder.parkName.setText(park.getName());
         holder.parkType.setText(park.getDesignation());
         holder.parkState.setText(park.getStates());
-
+        if(park.getImages().size() > 0) {
+            Picasso.get().load(park.getImages().get(0).getUrl()).into(holder.parkImage);
+        }
     }
 
     @Override
