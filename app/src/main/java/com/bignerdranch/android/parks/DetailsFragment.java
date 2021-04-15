@@ -42,11 +42,11 @@ public class DetailsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         parkViewModel = new ViewModelProvider(requireActivity()).get(ParkViewModel.class);
-        TextView test = view.getRootView().findViewById(R.id.test);
+
         parkViewModel.getSelectedPark().observe(this, new Observer<Park>() {
             @Override
             public void onChanged(Park park) {
-                test.setText(park.getName());
+
             }
         });
     }

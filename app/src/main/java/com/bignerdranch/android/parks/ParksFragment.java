@@ -70,7 +70,7 @@ public class ParksFragment extends Fragment implements OnParkClickListener {
         View view =  inflater.inflate(R.layout.fragment_parks, container, false);
         recyclerView = view.findViewById(R.id.park_recycler);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         return view;
     }
 
