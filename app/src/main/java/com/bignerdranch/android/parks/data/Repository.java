@@ -1,6 +1,8 @@
 package com.bignerdranch.android.parks.data;
 
 import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.bignerdranch.android.parks.controller.AppController;
 import com.bignerdranch.android.parks.model.Images;
@@ -59,7 +61,6 @@ public class Repository {
                     }
 
                 }, Throwable::printStackTrace);
-
         AppController.getInstance().addToRequestQueue(jsonObjectRequest);
     }
 }

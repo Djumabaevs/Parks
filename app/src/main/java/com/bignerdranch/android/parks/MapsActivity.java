@@ -1,17 +1,16 @@
 package com.bignerdranch.android.parks;
 //https://github.com/Djumabaevs/Parks.git
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
-import android.util.Log;
-import android.view.MenuItem;
 
 import com.bignerdranch.android.parks.data.AsyncResponse;
 import com.bignerdranch.android.parks.data.Repository;
 import com.bignerdranch.android.parks.model.Park;
+import com.bignerdranch.android.parks.model.ParkViewModel;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -20,11 +19,13 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
-
+    private ParkViewModel parkViewModel;
+    private List<Park> parkList;
     private GoogleMap mMap;
 
     @Override
@@ -32,6 +33,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+        parkViewModel = new ViewModelProvider(this).get(ParkViewModel.class);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -49,7 +51,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 mapFragment.getMapAsync(this);
                 return true;
             } else if(id == R.id.park_nav_button) {
-                selectedFragment = parksFragment.newInstance();
+                selectedFragment = ParksFragment.newInstance();
             }
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.map, selectedFragment)
@@ -62,21 +64,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        // Add a marker in Sydney and move the camera
+        parkList = new ArrayList<>();
+        parkList.clear();
 
         Repository.getParks(new AsyncResponse() {
             @Override
             public void processPark(List<Park> parks) {
-
+                parkList = parks;
                 for(Park park : parks) {
                     LatLng sydney = new LatLng(Double.parseDouble(park.getLatitude().toString()),
                             Double.parseDouble(park.getLongitude().toString()));
                     mMap.addMarker(new MarkerOptions().position(sydney).title(park.getFullName()));
-                    mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-                    Log.d("Park", "processPark: " + park.getFullName());
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney,5));
                 }
+                parkViewModel.setSelectedParks(parkList);
             }
         });
-
     }
 }
