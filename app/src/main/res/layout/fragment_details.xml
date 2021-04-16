@@ -38,7 +38,118 @@
                 android:layout_width="match_parent"
                 android:layout_height="225dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginBottom="8dp" />
+                android:layout_marginBottom="8dp" >
+            </androidx.viewpager2.widget.ViewPager2>
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:id="@+id/textView2"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:text="Description"
+                android:layout_marginTop="12dp"
+                android:textAlignment="textStart"
+                android:paddingLeft="8dp"/>
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:id="@+id/details_description"
+                android:textAlignment="textStart"
+                android:paddingLeft="6dp"/>
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:id="@+id/textView3"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:text="Activities"
+                android:layout_marginTop="4dp"
+                android:paddingLeft="6dp"/>
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:id="@+id/details_activities"
+                android:text="TextView"
+                android:layout_marginTop="4dp"
+                android:paddingLeft="6dp"/>
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:id="@+id/textView13"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:text="Topics"
+                android:layout_marginTop="4dp"
+                android:paddingLeft="6dp"/>
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:id="@+id/details_topics"
+                android:text="Topics"
+                android:layout_marginTop="4dp"
+                android:paddingLeft="6dp"/>
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:id="@+id/textView4"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:text="Entrance Fees"
+                android:layout_marginTop="4dp"
+                android:paddingLeft="6dp"/>
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:id="@+id/details_entrancefees"
+                android:text="TextView"
+                android:layout_marginTop="4dp"
+                android:paddingStart="6dp"/>
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:id="@+id/textView5"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:text="@string/operating_hours"
+                android:layout_marginTop="4dp"
+                android:paddingLeft="6dp"/>
+
+            <TextView
+                android:layout_height="130dp"
+                android:layout_width="wrap_content"
+                android:id="@+id/details_operatinghours"
+                android:text="TextView"
+                android:layout_marginTop="4dp"
+                android:paddingStart="6dp"/>
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:id="@+id/textView22"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:text="Directions"
+                android:layout_marginTop="4dp"
+                android:textAlignment="textStart"
+                android:paddingLeft="8dp"/>
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:id="@+id/details_directions"
+                android:paddingBottom="70dp"
+                android:textAlignment="textStart"
+                android:paddingLeft="6dp"/>
+
         </LinearLayout>
     </ScrollView>
 
