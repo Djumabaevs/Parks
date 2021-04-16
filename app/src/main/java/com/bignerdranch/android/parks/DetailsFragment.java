@@ -69,7 +69,7 @@ public class DetailsFragment extends Fragment {
 
                 StringBuilder stringBuilder = new StringBuilder();
                 for (int i = 0; i < park.getActivities().size(); i++) {
-                    stringBuilder.append(park.getActivities().get(i).getId()).append(" | ");
+                    stringBuilder.append(park.getActivities().get(i).getName()).append(" | ");
                 }
                 activities.setText(stringBuilder);
 
