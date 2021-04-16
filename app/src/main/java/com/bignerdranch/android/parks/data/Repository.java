@@ -109,15 +109,17 @@ public class Repository {
 
                             park.setDirectionsInfo(jsonObject.getString("directionsInfo"));
 
+                            park.setDescription(jsonObject.getString("description"));
+
                             //Entrance fees
 
                             JSONArray entranceFeeArray = jsonObject.getJSONArray("entranceFees");
                             List<EntranceFees> entranceFeesList = new ArrayList<>();
                             for (int j = 0; j < entranceFeeArray.length(); j++) {
                                 EntranceFees entranceFees = new EntranceFees();
-                                entranceFees.setTitle(jsonArray.getJSONObject(j).getString("title"));
-                                entranceFees.setDescription(jsonArray.getJSONObject(j).getString("description"));
-                                entranceFees.setCost(jsonArray.getJSONObject(j).getString("cost"));
+                                entranceFees.setCost(entranceFeeArray.getJSONObject(j).getString("cost"));
+                                entranceFees.setDescription(entranceFeeArray.getJSONObject(j).getString("description"));
+                                entranceFees.setTitle(entranceFeeArray.getJSONObject(j).getString("title"));
 
                                 entranceFeesList.add(entranceFees);
                             }

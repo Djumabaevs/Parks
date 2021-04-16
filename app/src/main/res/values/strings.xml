@@ -13,4 +13,5 @@
     <string name="description">Description</string>
     <string name="operating_hours">operating_hours</string>
     <string name="info_unavailable">info_unavailable</string>
+    <string name="directions_unavailable">Directions not available</string>
 </resources>
