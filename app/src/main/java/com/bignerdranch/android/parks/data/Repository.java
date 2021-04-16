@@ -5,6 +5,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.bignerdranch.android.parks.controller.AppController;
+import com.bignerdranch.android.parks.model.Activities;
 import com.bignerdranch.android.parks.model.Images;
 import com.bignerdranch.android.parks.model.Park;
 import com.bignerdranch.android.parks.util.Util;
@@ -50,6 +51,20 @@ public class Repository {
                             park.setWeatherInfo(jsonObject.getString("weatherInfo"));
                             park.setName(jsonObject.getString("name"));
                             park.setDesignation(jsonObject.getString("designation"));
+
+                            //Setup activities
+                            JSONArray activityArray = jsonObject.getJSONArray("activities");
+                            List<Activities> activitiesList = new ArrayList<>();
+                            for (int j = 0; j < activityArray.length();j++) {
+                                Activities activities = new Activities();
+                                activities.setId(activityArray.getJSONObject(j).getString("id"));
+                                activities.setName(activityArray.getJSONObject(j).getString("name"));
+
+                                activitiesList.add(activities);
+                            }
+
+                            park.setActivities(activitiesList);
+
 
                             parkList.add(park);
                         }

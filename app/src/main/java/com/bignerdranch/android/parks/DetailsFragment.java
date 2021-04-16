@@ -65,6 +65,14 @@ public class DetailsFragment extends Fragment {
             public void onChanged(Park park) {
                 parkName.setText(park.getName());
                 parkDes.setText(park.getDesignation());
+                description.setText(park.getDescription());
+
+                StringBuilder stringBuilder = new StringBuilder();
+                for (int i = 0; i < park.getActivities().size(); i++) {
+                    stringBuilder.append(park.getActivities().get(i).getId()).append(" | ");
+                }
+                activities.setText(stringBuilder);
+
                 viewPagerAdapter = new ViewPagerAdapter(park.getImages());
                 viewPager.setAdapter(viewPagerAdapter);
             }
