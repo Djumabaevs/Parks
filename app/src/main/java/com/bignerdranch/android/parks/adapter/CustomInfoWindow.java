@@ -32,6 +32,6 @@ public class CustomInfoWindow implements GoogleMap.InfoWindowAdapter {
         TextView parkState = view.findViewById(R.id.info_state);
         parkName.setText(marker.getTitle());
         parkState.setText(marker.getSnippet());
-        return null;
+        return view;
     }
 }

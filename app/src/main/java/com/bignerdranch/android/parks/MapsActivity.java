@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
 
+import com.bignerdranch.android.parks.adapter.CustomInfoWindow;
 import com.bignerdranch.android.parks.data.AsyncResponse;
 import com.bignerdranch.android.parks.data.Repository;
 import com.bignerdranch.android.parks.model.Park;
@@ -17,13 +18,15 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,
+        GoogleMap.OnInfoWindowClickListener {
 
     private ParkViewModel parkViewModel;
     private List<Park> parkList;
@@ -64,6 +67,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        mMap.setInfoWindowAdapter(new CustomInfoWindow(getApplicationContext()));
+        mMap.setOnInfoWindowClickListener(this);
 
         parkList = new ArrayList<>();
         parkList.clear();
@@ -78,7 +83,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                     MarkerOptions markerOptions = new MarkerOptions()
                             .position(location)
-                            .title(park.getFullName())
+                            .title(park.getName())
                             .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET))
                             .snippet(park.getStates());
                     mMap.addMarker(markerOptions);
@@ -87,5 +92,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 parkViewModel.setSelectedParks(parkList);
             }
         });
+    }
+
+    @Override
+    public void onInfoWindowClick(Marker marker) {
+
     }
 }
