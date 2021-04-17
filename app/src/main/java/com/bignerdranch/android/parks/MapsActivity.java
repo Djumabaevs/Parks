@@ -15,6 +15,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -74,7 +75,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 for(Park park : parks) {
                     LatLng location = new LatLng(Double.parseDouble(park.getLatitude().toString()),
                             Double.parseDouble(park.getLongitude().toString()));
-                    mMap.addMarker(new MarkerOptions().position(location).title(park.getFullName()));
+
+                    MarkerOptions markerOptions = new MarkerOptions()
+                            .position(location)
+                            .title(park.getFullName())
+                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET))
+                            .snippet(park.getStates());
+                    mMap.addMarker(markerOptions);
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location,5));
                 }
                 parkViewModel.setSelectedParks(parkList);

@@ -3,6 +3,7 @@ package com.bignerdranch.android.parks.adapter;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.TextView;
 
 import com.bignerdranch.android.parks.R;
 import com.google.android.gms.maps.GoogleMap;
@@ -27,6 +28,10 @@ public class CustomInfoWindow implements GoogleMap.InfoWindowAdapter {
 
     @Override
     public View getInfoContents(Marker marker) {
+        TextView parkName = view.findViewById(R.id.info_title);
+        TextView parkState = view.findViewById(R.id.info_state);
+        parkName.setText(marker.getTitle());
+        parkState.setText(marker.getSnippet());
         return null;
     }
 }
