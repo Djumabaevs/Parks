@@ -72,10 +72,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public void processPark(List<Park> parks) {
                 parkList = parks;
                 for(Park park : parks) {
-                    LatLng sydney = new LatLng(Double.parseDouble(park.getLatitude().toString()),
+                    LatLng location = new LatLng(Double.parseDouble(park.getLatitude().toString()),
                             Double.parseDouble(park.getLongitude().toString()));
-                    mMap.addMarker(new MarkerOptions().position(sydney).title(park.getFullName()));
-                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney,5));
+                    mMap.addMarker(new MarkerOptions().position(location).title(park.getFullName()));
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location,5));
                 }
                 parkViewModel.setSelectedParks(parkList);
             }
