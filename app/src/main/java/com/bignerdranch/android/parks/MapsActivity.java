@@ -86,7 +86,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             .title(park.getName())
                             .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET))
                             .snippet(park.getStates());
-                    mMap.addMarker(markerOptions);
+                    Marker marker = mMap.addMarker(markerOptions);
+                    marker.setTag(park);
+                   // mMap.addMarker(markerOptions);
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location,5));
                 }
                 parkViewModel.setSelectedParks(parkList);
@@ -96,6 +98,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onInfoWindowClick(Marker marker) {
-
+        //go to detailsFragment
+        parkViewModel.setSelectPark((Park) marker.getTag());
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.map, DetailsFragment.newInstance())
+                .commit();
     }
 }
