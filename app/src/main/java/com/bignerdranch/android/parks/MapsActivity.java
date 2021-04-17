@@ -99,6 +99,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onInfoWindowClick(Marker marker) {
         //go to detailsFragment
+        goToDetailsFragment(marker);
+    }
+
+    private void goToDetailsFragment(Marker marker) {
         parkViewModel.setSelectPark((Park) marker.getTag());
         getSupportFragmentManager()
                 .beginTransaction()
