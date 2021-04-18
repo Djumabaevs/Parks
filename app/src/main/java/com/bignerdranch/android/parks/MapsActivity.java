@@ -1,11 +1,14 @@
 package com.bignerdranch.android.parks;
 //https://github.com/Djumabaevs/Parks.git
 
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
+import android.widget.EditText;
+import android.widget.ImageButton;
 
 import com.bignerdranch.android.parks.adapter.CustomInfoWindow;
 import com.bignerdranch.android.parks.data.AsyncResponse;
@@ -31,6 +34,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private ParkViewModel parkViewModel;
     private List<Park> parkList;
     private GoogleMap mMap;
+    private CardView cardView;
+    private EditText stateCodeEt;
+    private ImageButton searchButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +48,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        cardView = findViewById(R.id.cardview);
+        stateCodeEt = findViewById(R.id.floating_state_value_et);
+        searchButton = findViewById(R.id.floating_search_button);
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
             Fragment selectedFragment = null;
