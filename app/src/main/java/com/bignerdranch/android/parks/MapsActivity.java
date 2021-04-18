@@ -7,6 +7,9 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
@@ -37,6 +40,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private CardView cardView;
     private EditText stateCodeEt;
     private ImageButton searchButton;
+    private String code = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,11 +56,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         stateCodeEt = findViewById(R.id.floating_state_value_et);
         searchButton = findViewById(R.id.floating_search_button);
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
             Fragment selectedFragment = null;
             int id = item.getItemId();
             if(id == R.id.map_nav_button) {
+                if(cardView.getVisibility() == View.INVISIBLE ||
+                cardView.getVisibility() == View.GONE) {
+                    cardView.setVisibility(View.VISIBLE);
+                }
                 //show map view
+                parkList.clear();
                 mMap.clear();
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.map, mapFragment)
@@ -65,12 +75,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 return true;
             } else if(id == R.id.park_nav_button) {
                 selectedFragment = ParksFragment.newInstance();
+                cardView.setVisibility(View.GONE);
             }
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.map, selectedFragment)
                     .commit();
             return true;
         });
+
+        searchButton.setOnClickListener(view -> {
+            parkList.clear();
+            String stateCode = stateCodeEt.getText().toString().trim();
+            if(!TextUtils.isEmpty(stateCode)) {
+                code = stateCode;
+                parkViewModel.selectCode(code);
+                onMapReady(mMap); //refresh the map
+                stateCodeEt.setText("");
+            }
+        });
+
     }
 
     @Override
@@ -82,31 +105,36 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         parkList = new ArrayList<>();
         parkList.clear();
 
-        Repository.getParks(new AsyncResponse() {
-            @Override
-            public void processPark(List<Park> parks) {
-                parkList = parks;
-                for(Park park : parks) {
-                    LatLng location = new LatLng(Double.parseDouble(park.getLatitude().toString()),
-                            Double.parseDouble(park.getLongitude().toString()));
+        populateMap();
+    }
 
-                    MarkerOptions markerOptions = new MarkerOptions()
-                            .position(location)
-                            .title(park.getName())
-                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET))
-                            .snippet(park.getStates());
-                    Marker marker = mMap.addMarker(markerOptions);
-                    marker.setTag(park);
-                   // mMap.addMarker(markerOptions);
-                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location,5));
-                }
-                parkViewModel.setSelectedParks(parkList);
+    private void populateMap() {
+        mMap.clear(); //Clears the map!
+        Repository.getParks(parks -> {
+            parkList = parks;
+            for(Park park : parks) {
+                LatLng location = new LatLng(Double.parseDouble(park.getLatitude()),
+                        Double.parseDouble(park.getLongitude()));
+
+                MarkerOptions markerOptions = new MarkerOptions()
+                        .position(location)
+                        .title(park.getName())
+                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET))
+                        .snippet(park.getStates());
+                Marker marker = mMap.addMarker(markerOptions);
+                marker.setTag(park);
+               // mMap.addMarker(markerOptions);
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location,5));
             }
-        });
+            parkViewModel.setSelectedParks(parkList);
+            Log.d("Size", "populateMap: " + parkList.size());
+        }, code);
+
     }
 
     @Override
     public void onInfoWindowClick(Marker marker) {
+        cardView.setVisibility(View.GONE);
         //go to detailsFragment
         goToDetailsFragment(marker);
     }

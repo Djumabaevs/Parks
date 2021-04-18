@@ -49,6 +49,8 @@ public class DetailsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         viewPager = view.findViewById(R.id.details_viewpager);
 
+        parkViewModel = new ViewModelProvider(requireActivity()).get(ParkViewModel.class);
+
         TextView parkName = view.findViewById(R.id.details_park_name);
         TextView parkDes = view.findViewById(R.id.details_park_designation);
 
@@ -59,7 +61,6 @@ public class DetailsFragment extends Fragment {
         TextView detailsTopics = view.getRootView().findViewById(R.id.details_topics);
         TextView directions = view.getRootView().findViewById(R.id.details_directions);
 
-        parkViewModel = new ViewModelProvider(requireActivity()).get(ParkViewModel.class);
 
         parkViewModel.getSelectedPark().observe(this, park -> {
             parkName.setText(park.getName());

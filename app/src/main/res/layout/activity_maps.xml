@@ -27,7 +27,7 @@
       <EditText
           android:id="@+id/floating_state_value_et"
           android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
+          android:layout_height="57dp"
           android:layout_weight="1"
           android:ems="10"
           android:hint="@string/hint_search"

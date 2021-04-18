@@ -1,5 +1,7 @@
 package com.bignerdranch.android.parks.data;
 
+import android.util.Log;
+
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -25,8 +27,10 @@ public class Repository {
 
     static List<Park> parkList = new ArrayList<>();
 
-    public static void getParks(final AsyncResponse callback) {
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, Util.PARKS_URL, null,
+    public static void getParks(final AsyncResponse callback, String code) {
+        String url = Util.getParksUrl(code);
+        Log.d("Url", "getParks: " + url);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url , null,
                 response -> {
                     try {
                         JSONArray jsonArray = response.getJSONArray("data");
