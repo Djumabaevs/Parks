@@ -14,4 +14,5 @@
     <string name="operating_hours">operating_hours</string>
     <string name="info_unavailable">info_unavailable</string>
     <string name="directions_unavailable">Directions not available</string>
+    <string name="hint_search">Enter State code: WA,OR,NY...</string>
 </resources>
